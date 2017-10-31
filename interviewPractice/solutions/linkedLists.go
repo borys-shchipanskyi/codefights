@@ -80,3 +80,80 @@ func IsListPalindrome(l *ListNode) bool {
 	return isPalindrome
 
 }
+
+func getSumAndOdd(sum int) (int, int) {
+	n := 10000
+	if sum >= n {
+		return sum % n, sum / n
+	}
+	return sum, 0
+
+}
+
+func AddTwoHugeNumbers(a *ListNode, b *ListNode) *ListNode {
+	var res *ListNode = nil
+	var first *ListNode = nil
+	revA := ReverseList(a)
+	revB := ReverseList(b)
+
+	for odd := 0; revB != nil || revA != nil || odd != 0; {
+		sum := 0
+		if revB != nil && revA != nil {
+			sum, odd = getSumAndOdd(revB.Value.(int) + revA.Value.(int) + odd)
+			revB = revB.Next
+			revA = revA.Next
+
+		} else if revB == nil && revA != nil {
+			sum, odd = getSumAndOdd(revA.Value.(int) + odd)
+			revA = revA.Next
+		} else if revA == nil && revB != nil {
+			sum, odd = getSumAndOdd(revB.Value.(int) + odd)
+			revB = revB.Next
+		} else {
+			sum, odd = getSumAndOdd(odd)
+		}
+
+		if res == nil {
+			res = &ListNode{sum, nil}
+			first = res
+		} else {
+			res.Next = &ListNode{sum, nil}
+			res = res.Next
+		}
+	}
+
+	return ReverseList(first)
+}
+
+func MergeTwoLinkedLists(l1 *ListNode, l2 *ListNode) *ListNode {
+	var res *ListNode = nil
+	var head *ListNode = nil
+	for l1 != nil || l2 != nil {
+		val := 0
+		if l1 != nil && l2 != nil {
+			if l1.Value.(int) < l2.Value.(int) {
+				val = l1.Value.(int)
+				l1 = l1.Next
+			} else {
+				val = l2.Value.(int)
+				l2 = l2.Next
+			}
+		} else if l1 == nil {
+			val = l2.Value.(int)
+			l2 = l2.Next
+		} else if l2 == nil {
+			val = l1.Value.(int)
+			l1 = l1.Next
+		}
+
+		if res == nil {
+			res = &ListNode{val, nil}
+			head = res
+		} else {
+			res.Next = &ListNode{val, nil}
+			res = res.Next
+		}
+	}
+	return head
+
+}
