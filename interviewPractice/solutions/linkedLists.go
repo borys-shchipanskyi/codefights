@@ -29,6 +29,9 @@ func IsEqual(l1 *ListNode, l2 *ListNode) bool {
 		currentL1 = currentL1.Next
 		currentL2 = currentL2.Next
 	}
+	if (currentL2 != nil) {
+		return false
+	}
 	return true
 }
 
@@ -156,4 +159,71 @@ func MergeTwoLinkedLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return head
 
+}
+
+func SplitList(l *ListNode, k int) (head *ListNode, tail *ListNode) {
+	head = l
+	var subListTail *ListNode
+	for i, current := 0, l; i < k && current != nil; i++ {
+		//fmt.Printf("i: %d \n", i)
+		subListTail = current
+		current = current.Next
+	}
+	if subListTail == nil {
+		return nil, nil
+	}
+	tail = subListTail.Next
+	subListTail.Next = nil
+
+	return head, tail
+}
+
+func getListLen(l *ListNode)int{
+	counter := 0
+	for current:= l; current != nil; current = current.Next{
+		counter += 1
+	}
+	return counter
+}
+
+func ReverseNodesInKGroups(l *ListNode, k int) *ListNode {
+	if l.Next == nil{
+		return l
+	}
+	var head, tail, buff, newTail *ListNode
+	counter := 0
+	for current := l; current != nil; {
+		if counter == k {
+			counter = 0
+			if head == nil {
+				head = buff
+				tail = newTail
+			} else {
+				tail.Next = buff
+				tail = newTail
+
+			}
+			newTail = nil
+		}
+		counter += 1
+		if newTail == nil {
+			newTail = current
+			buff = newTail
+			current = current.Next
+			newTail.Next = nil
+		} else {
+			tmp := current
+			current = current.Next
+			tmp.Next = buff
+			buff = tmp
+		}
+
+	}
+	if getListLen(buff) != k{
+		tail.Next = ReverseList(buff)
+	} else {
+		tail.Next = buff
+	}
+
+	return head
 }

@@ -2,8 +2,8 @@ package tests
 
 import (
 	. "codefights/interviewPractice/solutions"
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestRemoveKFromList(t *testing.T) {
@@ -70,9 +70,9 @@ func TestIsListPalindrome(t *testing.T) {
 
 func TestAddTwoHugeNumbers(t *testing.T) {
 	tests := []struct {
-		a *ListNode
-		b *ListNode
-		out   *ListNode
+		a   *ListNode
+		b   *ListNode
+		out *ListNode
 	}{
 		{
 			&ListNode{9876, &ListNode{5432, &ListNode{1999, nil}}},
@@ -89,7 +89,6 @@ func TestAddTwoHugeNumbers(t *testing.T) {
 			&ListNode{9999, &ListNode{9999, &ListNode{9999, &ListNode{9999, &ListNode{9999, &ListNode{9999, nil}}}}}},
 			&ListNode{1, &ListNode{0, &ListNode{0, &ListNode{0, &ListNode{0, &ListNode{0, &ListNode{0, nil}}}}}}},
 		},
-
 	}
 	for _, test := range tests {
 		res := AddTwoHugeNumbers(test.a, test.b)
@@ -101,19 +100,29 @@ func TestAddTwoHugeNumbers(t *testing.T) {
 	}
 }
 
+func genereteTestList(numbers []int) *ListNode {
+	res := &ListNode{numbers[0], nil}
+	next := res
+	for i := 1; i < len(numbers); i++ {
+		noda := &ListNode{numbers[i], nil}
+		next.Next = noda
+		next = next.Next
+
+	}
+	return res
+}
 
 func TestMergeTwoLinkedLists(t *testing.T) {
 	tests := []struct {
-		l1 *ListNode
-		l2 *ListNode
-		out   *ListNode
+		l1  *ListNode
+		l2  *ListNode
+		out *ListNode
 	}{
 		{
 			&ListNode{1, &ListNode{2, &ListNode{3, nil}}},
 			&ListNode{4, &ListNode{5, &ListNode{6, nil}}},
 			&ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, &ListNode{6, nil}}}}}},
 		},
-
 	}
 	for _, test := range tests {
 		res := MergeTwoLinkedLists(test.l1, test.l2)
@@ -121,6 +130,42 @@ func TestMergeTwoLinkedLists(t *testing.T) {
 		fmt.Printf("res : %v\n", IsEqual(res, test.out))
 		if !IsEqual(res, test.out) {
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
+		}
+	}
+}
+
+func TestReverseNodesInKGroups(t *testing.T) {
+	tests := []struct {
+		l1  *ListNode
+		k   int
+		out *ListNode
+	}{
+		{
+			genereteTestList([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
+			3,
+			genereteTestList([]int{3, 2, 1, 6, 5, 4, 9, 8, 7, 10, 11}),
+		},
+		{
+			genereteTestList([]int{239}),
+			1,
+			genereteTestList([]int{239}),
+		},
+		{
+			genereteTestList([]int{1,2,3,4}),
+			2,
+			genereteTestList([]int{2,1,4,3}),
+		},
+	}
+	for _, test := range tests {
+		res := ReverseNodesInKGroups(test.l1, test.k)
+		fmt.Printf("res : %v\n", IsEqual(res, test.out))
+		PrintListNode(res)
+		PrintListNode(test.out)
+		if !IsEqual(res, test.out) {
+			//fmt.Printf("res : %v\n", IsEqual(res, test.out))
+			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
+			//PrintListNode(res)
+			//PrintListNode(test.out)
 		}
 	}
 }
