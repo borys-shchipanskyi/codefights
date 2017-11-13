@@ -169,3 +169,40 @@ func TestReverseNodesInKGroups(t *testing.T) {
 		}
 	}
 }
+
+
+func TestRearrangeLastN(t *testing.T) {
+	tests := []struct {
+		l1  *ListNode
+		k   int
+		out *ListNode
+	}{
+		{
+			genereteTestList([]int{1, 2, 3, 4, 5}),
+			3,
+			genereteTestList([]int{3, 4, 5, 1, 2}),
+		},
+		{
+			genereteTestList([]int{1000, -1000}),
+			0,
+			genereteTestList([]int{1000, -1000}),
+		},
+		{
+			genereteTestList([]int{123, 456, 789, 0}),
+			4,
+			genereteTestList([]int{123, 456, 789, 0}),
+		},
+	}
+	for _, test := range tests {
+		res := RearrangeLastN(test.l1, test.k)
+		fmt.Printf("res : %v\n", IsEqual(res, test.out))
+		PrintListNode(res)
+		PrintListNode(test.out)
+		if !IsEqual(res, test.out) {
+			//fmt.Printf("res : %v\n", IsEqual(res, test.out))
+			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
+			//PrintListNode(res)
+			//PrintListNode(test.out)
+		}
+	}
+}

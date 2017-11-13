@@ -227,3 +227,29 @@ func ReverseNodesInKGroups(l *ListNode, k int) *ListNode {
 
 	return head
 }
+
+func RearrangeLastN(l *ListNode, n int) *ListNode {
+	newTail := l
+	tail := l
+	counter := 0
+	for current := l; current != nil; current = current.Next {
+		tail = current
+		if counter != n +1 {
+			counter += 1
+			continue
+		}
+		newTail = newTail.Next
+
+	}
+
+	if n == 0 || counter <= n{
+		return l
+	}
+	tmp := newTail.Next
+	newTail.Next = nil
+	tail.Next = l
+	return tmp
+
+
+
+}
