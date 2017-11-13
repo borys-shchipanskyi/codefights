@@ -42,7 +42,7 @@ func TestRemoveKFromList(t *testing.T) {
 	for _, test := range tests {
 
 		res := RemoveKFromList(test.input, test.k)
-		if !IsEqual(test.out, res) {
+		if !IsListNodeEquals(test.out, res) {
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.input, test.out, res)
 		}
 	}
@@ -93,8 +93,8 @@ func TestAddTwoHugeNumbers(t *testing.T) {
 	for _, test := range tests {
 		res := AddTwoHugeNumbers(test.a, test.b)
 		PrintListNode(res)
-		fmt.Printf("res : %v\n", IsEqual(res, test.out))
-		if !IsEqual(res, test.out) {
+		fmt.Printf("res : %v\n", IsListNodeEquals(res, test.out))
+		if !IsListNodeEquals(res, test.out) {
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.a, test.out, res)
 		}
 	}
@@ -127,8 +127,8 @@ func TestMergeTwoLinkedLists(t *testing.T) {
 	for _, test := range tests {
 		res := MergeTwoLinkedLists(test.l1, test.l2)
 		PrintListNode(res)
-		fmt.Printf("res : %v\n", IsEqual(res, test.out))
-		if !IsEqual(res, test.out) {
+		fmt.Printf("res : %v\n", IsListNodeEquals(res, test.out))
+		if !IsListNodeEquals(res, test.out) {
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
 		}
 	}
@@ -158,10 +158,10 @@ func TestReverseNodesInKGroups(t *testing.T) {
 	}
 	for _, test := range tests {
 		res := ReverseNodesInKGroups(test.l1, test.k)
-		fmt.Printf("res : %v\n", IsEqual(res, test.out))
+		fmt.Printf("res : %v\n", IsListNodeEquals(res, test.out))
 		PrintListNode(res)
 		PrintListNode(test.out)
-		if !IsEqual(res, test.out) {
+		if !IsListNodeEquals(res, test.out) {
 			//fmt.Printf("res : %v\n", IsEqual(res, test.out))
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
 			//PrintListNode(res)
@@ -195,10 +195,10 @@ func TestRearrangeLastN(t *testing.T) {
 	}
 	for _, test := range tests {
 		res := RearrangeLastN(test.l1, test.k)
-		fmt.Printf("res : %v\n", IsEqual(res, test.out))
+		fmt.Printf("res : %v\n", IsListNodeEquals(res, test.out))
 		PrintListNode(res)
 		PrintListNode(test.out)
-		if !IsEqual(res, test.out) {
+		if !IsListNodeEquals(res, test.out) {
 			//fmt.Printf("res : %v\n", IsEqual(res, test.out))
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.l1, test.out, res)
 			//PrintListNode(res)

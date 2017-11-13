@@ -16,7 +16,7 @@ func PrintListNode(l *ListNode) {
 	fmt.Println()
 }
 
-func IsEqual(l1 *ListNode, l2 *ListNode) bool {
+func IsListNodeEquals(l1 *ListNode, l2 *ListNode) bool {
 	currentL1 := l1
 	currentL2 := l2
 	for (currentL1 != nil ) {
