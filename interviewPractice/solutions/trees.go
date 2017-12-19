@@ -166,3 +166,24 @@ func KthSmallestInBST(t *Tree, k int) int {
 	}
 	return 0
 }
+
+
+func isEquals(t1 *Tree, t2 *Tree) bool {
+	if t1 == nil && t2 == nil{
+		return true
+	}
+	if t1 != nil && t2 != nil{
+		return t1.Value == t2.Value && isEquals(t1.Left, t2.Left) && isEquals(t1.Right, t2.Right)
+	}
+	return false
+}
+func IsSubtree(t1 *Tree, t2 *Tree) bool {
+	if (t1 == nil && t2 != nil){
+		return false
+	}
+	if isEquals(t1, t2){
+		return true
+	}
+	return IsSubtree(t1.Right, t2) || IsSubtree(t1.Left, t2)
+
+}

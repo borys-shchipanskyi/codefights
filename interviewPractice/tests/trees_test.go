@@ -88,3 +88,81 @@ func TestKthSmallestInBST(t *testing.T) {
 		}
 	}
 }
+
+func TestIsSubtree(t *testing.T) {
+	tests := []struct {
+		t1  *Tree
+		t2  *Tree
+		out bool
+	}{
+		{
+			CreateTree(StrToMap([]byte(`{
+    "value": 5,
+    "left": {
+        "value": 10,
+        "left": {
+            "value": 4,
+            "left": {
+                "value": 1,
+                "left": null,
+                "right": null
+            },
+            "right": {
+                "value": 2,
+                "left": null,
+                "right": null
+            }
+        },
+        "right": {
+            "value": 6,
+            "left": null,
+            "right": {
+                "value": -1,
+                "left": null,
+                "right": null
+            }
+        }
+    },
+    "right": {
+        "value": 7,
+        "left": null,
+        "right": null
+    }
+}`))),
+			CreateTree(StrToMap([]byte(`{
+    "value": 10,
+    "left": {
+        "value": 4,
+        "left": {
+            "value": 1,
+            "left": null,
+            "right": null
+        },
+        "right": {
+            "value": 2,
+            "left": null,
+            "right": null
+        }
+    },
+    "right": {
+        "value": 6,
+        "left": null,
+        "right": {
+            "value": -1,
+            "left": null,
+            "right": null
+        }
+    }
+}`))),
+			true,
+		},
+
+	}
+	for _, test := range tests {
+
+		res := IsSubtree(test.t1, test.t2)
+		if res != test.out {
+			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.t1, test.out, res)
+		}
+	}
+}
