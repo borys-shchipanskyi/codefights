@@ -167,13 +167,12 @@ func KthSmallestInBST(t *Tree, k int) int {
 	return 0
 }
 
-
-func isEquals(t1 *Tree, t2 *Tree) bool {
+func IsEquals(t1 *Tree, t2 *Tree) bool {
 	if t1 == nil && t2 == nil{
 		return true
 	}
 	if t1 != nil && t2 != nil{
-		return t1.Value == t2.Value && isEquals(t1.Left, t2.Left) && isEquals(t1.Right, t2.Right)
+		return t1.Value == t2.Value && IsEquals(t1.Left, t2.Left) && IsEquals(t1.Right, t2.Right)
 	}
 	return false
 }
@@ -181,9 +180,34 @@ func IsSubtree(t1 *Tree, t2 *Tree) bool {
 	if (t1 == nil && t2 != nil){
 		return false
 	}
-	if isEquals(t1, t2){
+	if IsEquals(t1, t2) {
 		return true
 	}
 	return IsSubtree(t1.Right, t2) || IsSubtree(t1.Left, t2)
 
+}
+
+func getRootIndex(rootEl int, inorder []int) int {
+	for i, val := range inorder {
+		if val == rootEl {
+			return i
+		}
+	}
+	return -1
+}
+
+func RestoreBinaryTree(inorder []int, preorder []int) *Tree {
+	if len(inorder) == 0 {
+		return nil
+	}
+	t := &Tree{preorder[0], nil, nil}
+	if len(inorder) > 1 {
+		rootIn := getRootIndex(preorder[0], inorder)
+		fmt.Printf("L root in : %d\t in:%v \t pre: %v\n\n", rootIn, inorder[ : rootIn], preorder[1 : rootIn + 1])
+		t.Left = RestoreBinaryTree(inorder[ : rootIn], preorder[1 : rootIn + 1])
+		fmt.Printf("R root in : %d\t in:%v \t pre: %v\n\n", rootIn, inorder[rootIn + 1 : ], preorder[rootIn + 1 : ])
+		t.Right = RestoreBinaryTree(inorder[rootIn + 1 : ], preorder[rootIn + 1 : ])
+	}
+
+	return t
 }

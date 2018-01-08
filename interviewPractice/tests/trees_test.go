@@ -96,64 +96,8 @@ func TestIsSubtree(t *testing.T) {
 		out bool
 	}{
 		{
-			CreateTree(StrToMap([]byte(`{
-    "value": 5,
-    "left": {
-        "value": 10,
-        "left": {
-            "value": 4,
-            "left": {
-                "value": 1,
-                "left": null,
-                "right": null
-            },
-            "right": {
-                "value": 2,
-                "left": null,
-                "right": null
-            }
-        },
-        "right": {
-            "value": 6,
-            "left": null,
-            "right": {
-                "value": -1,
-                "left": null,
-                "right": null
-            }
-        }
-    },
-    "right": {
-        "value": 7,
-        "left": null,
-        "right": null
-    }
-}`))),
-			CreateTree(StrToMap([]byte(`{
-    "value": 10,
-    "left": {
-        "value": 4,
-        "left": {
-            "value": 1,
-            "left": null,
-            "right": null
-        },
-        "right": {
-            "value": 2,
-            "left": null,
-            "right": null
-        }
-    },
-    "right": {
-        "value": 6,
-        "left": null,
-        "right": {
-            "value": -1,
-            "left": null,
-            "right": null
-        }
-    }
-}`))),
+			CreateTree(StrToMap([]byte(`{"value": 5,"left": {"value": 10,"left": {"value": 4,"left": {"value": 1,"left": null,"right": null},"right": {"value": 2,"left": null,"right": null}},"right": {"value": 6,"left": null,"right": {"value": -1,"left": null,"right": null}}},"right": {"value": 7,"left": null,"right": null}}`))),
+			CreateTree(StrToMap([]byte(`{"value": 10,"left": {"value": 4,"left": {"value": 1,"left": null,"right": null},"right": {"value": 2,"left": null,"right": null}},"right": {"value": 6,"left": null,"right": {"value": -1,"left": null,"right": null}}}`))),
 			true,
 		},
 
@@ -163,6 +107,28 @@ func TestIsSubtree(t *testing.T) {
 		res := IsSubtree(test.t1, test.t2)
 		if res != test.out {
 			t.Errorf("Test input: %#v, Expect: %#v, but get: %#v\n", test.t1, test.out, res)
+		}
+	}
+}
+
+func TestRestoreBinaryTree(t *testing.T){
+	tests := []struct {
+		inorder []int
+		preorder []int
+		out *Tree
+	}{
+		{
+			[]int{4, 2, 1, 5, 3, 6},
+			[]int{1, 2, 4, 3, 5, 6},
+			CreateTree(StrToMap([]byte(`{"value":1,"left":{"value":2,"left":{"value":4,"left":null,"right":null},"right":null},"right":{"value":3,"left":{"value":5,"left":null,"right":null},"right":{"value":6,"left":null,"right":null}}}`))),
+		},
+
+	}
+	for _, test := range tests {
+
+		res := RestoreBinaryTree(test.inorder, test.preorder)
+		if IsEquals(res, test.out) {
+			t.Errorf("Expect: %#v, but get: %#v\n", test.out, res)
 		}
 	}
 }
